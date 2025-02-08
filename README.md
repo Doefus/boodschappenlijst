@@ -2,9 +2,9 @@
 Oefenproject in Python voor SQL-lessen
 
 ### Stappen
-- installeer python 3.12 uit de Windows Store
+- installeer Python 3.12 uit de Windows Store
 - installeer Visual Studio Code
-- download alle bestanden als zip
+- download alle bestanden als zip in vanaf Github
 - pak ze uit en sla alles op in een lokale map
 - open de folder in VSC
 - open de terminal en run "pip install -r requirements.txt"
