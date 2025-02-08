@@ -1,5 +1,7 @@
 ﻿# Boodschappenlijst
-- oefenproject in Python voor SQL-lessen
+Oefenproject in Python voor SQL-lessen
+
+###Stappen
 - installeer python 3.12 uit de Windows Store
 - installeer Visual Studio Code
 - download alle bestanden als zip
