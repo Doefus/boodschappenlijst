@@ -1,8 +1,15 @@
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
-    padding: 20px;
-    background-color: #f0f0f0;
+    padding: 18vw;
+    background-color: #fafafa;
+}
+
+.wrapper {
+    background-color: #dbe9ef;
+    border-radius: 10px;
+    padding: 2vw;
+    box-shadow: #dadada 4px 4px 4px 4px;
 }
 
 h1, h2 {
@@ -23,7 +30,7 @@ label {
 }
 
 input[type="text"] {
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -57,6 +64,10 @@ thead {
 th, td {
     padding: 12px 15px;
     text-align: left;
+}
+
+th.th-fit {
+    width: 100px;
 }
 
 tbody tr:nth-child(even) {
