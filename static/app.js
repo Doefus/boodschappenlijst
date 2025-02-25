@@ -2,28 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     loadItems();
 });
 
-document.getElementById('textForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const text = document.getElementById('textInput').value;
-
-    fetch('/submit', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ textInput: text })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data.message);
-        loadItems();  // Update the list after submitting a new item
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-});
-
 function loadItems() {
     fetch('/items', {
         method: 'GET',
@@ -49,7 +27,7 @@ function loadItems() {
 
             const actionCell = document.createElement('td');
             const deleteButton = document.createElement('button');
-            deleteButton.textContent = '🗑️';
+            deleteButton.textContent = '❌';
             deleteButton.addEventListener('click', function() {
                 deleteItem(item[0]);
             });
@@ -64,9 +42,32 @@ function loadItems() {
     });
 }
 
-function deleteItem(itemId) {
-    fetch('/delete_item', {
+document.getElementById('textForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const text = document.getElementById('textInput').value;
+
+    fetch('/items', {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ textInput: text })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message);
+        loadItems();  // Update the list after submitting a new item
+        document.getElementById('textInput').value = ''
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
+
+function deleteItem(itemId) {
+    fetch('/items', {
+        method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
         },

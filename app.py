@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify       # type: ignore
 import mysql.connector                          # type: ignore
 from mysql.connector import errorcode           # type: ignore
 from datetime import datetime
-from dotenv import load_dotenv                     # type: ignore
+from dotenv import load_dotenv                  # type: ignore
 import os
 
 app = Flask(__name__)
@@ -42,11 +42,7 @@ def create_table(cursor):
 
 def init_db():
     try:
-        cnx = mysql.connector.connect(
-            host=DATABASE_HOST,
-            user=DATABASE_USER,
-            password=DATABASE_PASSWORD
-        )
+        cnx = get_db_connection()
         cursor = cnx.cursor()
 
         try:
@@ -71,7 +67,22 @@ def init_db():
 def index():
     return app.send_static_file('index.html')
 
-@app.route('/submit', methods=['POST'])
+@app.route('/items', methods=['GET'])
+def get_items():
+    try:
+        cnx = get_db_connection()
+        cursor = cnx.cursor()
+        query = "SELECT id, item, created_at FROM items"
+        cursor.execute(query)
+        items = cursor.fetchall()
+        cursor.close()
+        cnx.close()
+        return jsonify(items)
+    except mysql.connector.Error as err:
+        print(err)
+        return jsonify({'message': 'Database error occurred'}), 500
+
+@app.route('/items', methods=['POST'])
 def submit():
     data = request.get_json()
     text = data.get('textInput')
@@ -92,22 +103,7 @@ def submit():
         print(err)
         return jsonify({'message': 'Database error occurred'}), 500
 
-@app.route('/items', methods=['GET'])
-def get_items():
-    try:
-        cnx = get_db_connection()
-        cursor = cnx.cursor()
-        query = "SELECT id, item, created_at FROM items"
-        cursor.execute(query)
-        items = cursor.fetchall()
-        cursor.close()
-        cnx.close()
-        return jsonify(items)
-    except mysql.connector.Error as err:
-        print(err)
-        return jsonify({'message': 'Database error occurred'}), 500
-
-@app.route('/delete_item', methods=['POST'])
+@app.route('/items', methods=['DELETE'])
 def delete_item():
     data = request.get_json()
     item_id = data.get('item_id')
