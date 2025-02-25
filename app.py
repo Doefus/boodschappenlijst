@@ -1,8 +1,8 @@
-from flask import Flask, request, jsonify
-import mysql.connector
-from mysql.connector import errorcode
+from flask import Flask, request, jsonify       # type: ignore
+import mysql.connector                          # type: ignore
+from mysql.connector import errorcode           # type: ignore
 from datetime import datetime
-from dotenv import load_dotenv
+from dotenv import load_dotenv                     # type: ignore
 import os
 
 app = Flask(__name__)
